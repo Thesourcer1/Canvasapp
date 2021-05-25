@@ -1,38 +1,368 @@
+
+/* general css */
+
 .App {
+  display: grid;
+grid-template-columns: 8fr 2fr; /*  3fr 1fr */
+  min-height: 100vh
+}
+.CanvasBox {
+  background: #F1F1F1;
+  place-items: center;
+  display: grid;
+}
+
+#canvasid {
+  box-shadow: #00000016 7px 5px 26px;
+  border: #ababab47 solid 1px;
+}
+.ToolBox {
+  box-shadow: #1433fd1f 0 0 38px 5px;
+  padding: 10px;
+}
+
+.ToolBox >* {
+  /* transform:scale(.7); */
+}
+
+.card-header {
+  background: transparent !important;
+  border: unset !important;
+}
+
+.card {
+  border: unset !important;
+}
+
+
+/*canvas settings */
+#paperIcon {
+  font-size: 7rem;
+  margin-top: -10px;
+  /* color: #838383; */
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#canvasSettings >* {
+  align-items: baseline;
+}
+#canvasSettings label {
+  margin-left: 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+label, p {
+  font-size: 1rem;
+  font-weight: 300;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.radioWrapper {
+  display: block;
+  /* position: relative; */
+  display: flex;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radioWrapper input {
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  /* top:4px; */
+  margin-top: 2px;
+  left: 18px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: solid 1px #464646c9;
+}
+
+/* On mouse-over, add a grey background color */
+.radioWrapper:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radioWrapper input:checked ~ .checkmark {
+  background-color: white;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radioWrapper input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radioWrapper .checkmark:after {
+  top: 2px;
+  left: 2px;
+  /* width: 8px;
+  height: 8px; */
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4158f8;
+}
+.settingsWrapper {
+  display: flex;
+  align-items: center;
+}
+.card-header .bi {
+  width: 20px;
+  height: 20px;
+  position: absolute !important;
+  right: 25px;
+  top: 15px; /*25px;*/
+  color: black;
+}
+
+.btnTools, .active {
+  border: solid white 1px;
+  padding: 20px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: white;
+  font-size: 1rem;
+  font-weight: 300;
+  /* box-shadow: rgb(218, 213, 218); */
+  transition: ease-in-out 0.2s all;
+}
+.btnTools svg, .active svg {
+  margin-bottom: 10px;
+  height: 1.2em;
+  width: 2em !important;
+}
+.active {
+  color: #4158F8;
+}
+
+.toolsWrapper {
+  display: flex;
+  justify-content: space-around;
+}
+.inputTools {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.inputTools label {
+  margin-bottom: 20px;
+}
+
+.inputTools label:nth-of-type(1) {
+  margin-bottom: 14px;
+}
+
+input[type="color"] {
+  /* border-radius: 100%; */
+  height: 35px;
+  width: 70px;
+  outline: none;
+  border-radius: 1px;
+  margin-bottom: 1.8rem;
+  -webkit-appearance: none;
+  border: solid 5px white;
+  box-shadow: 0px 0px 5px 1px #38383873;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;	
+}
+input[type="color"]::-webkit-color-swatch {
+  /* border: none;
+  border-radius: 100%; */
+  border-radius: 2px;
+  border: none;
+}
+ /* circle/thumb to range input*/
+input[type="range"] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type="range"]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type="range"]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent; 
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  background: #4158F8 !important;
+  cursor: pointer;
+  margin-top: -7px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+}
+
+/* All the same stuff for Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  background: #4158F8 !important;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type="range"]::-ms-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 100%;
+  background: #4158F8 !important;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: #DDD8D8;
+  border-radius: 20px;
+}
+ /* runner to range input*/
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #DDD8D8;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: #DDD8D8;
+  border-radius: 15px;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  width: 100%;
+  height: 3px;
+  background: #DDD8D8;
+  border-radius: 15px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type=range]::-ms-fill-upper {
+  width: 100%;
+  height: 3px;
+  background: #DDD8D8;
+  border-radius: 15px;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #DDD8D8;
+}
+
+/* Export.js css */
+
+/* file name + filetypesetup*/
+
+.exportWrapper {
+  padding-left: 30px !important;
+}
+#fileName {
+  border-radius: 20px;
+  border: solid 1px #4158F8;
+  padding: 3px 2px 4px 15px;;
+  outline: none;
+  display: flex;
+  justify-content: space-around;
+  width: fit-content;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+}
+.fileNameContainer {
+  display: flex;
+  flex-direction: column;
+  padding-left: 14px;
+}
+
+.exportWrapper p {
+  margin-left: -16px;
+}
+
+.exportWrapper .radioWrapper {
+  font-size: 0.8rem
+}
+
+.exportWrapper .radioWrapper .checkmark {
+  position: absolute;
+  /* top:4px; */
+  margin-top: 4px;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: solid 1px #464646c9;
+}
+
+.exportWrapper .radioWrapper.file .checkmark {
+  position: absolute;
+  /* top:4px; */
+  margin-top: 2px;
+
+}
+
+.exportWrapper .radioWrapper.file {
+  padding-left: 25px;
+}
+
+
+
+/* save button  */
+
+.exportWrapper button {
+  border-radius: 20px;
+  background-color:  #4158F8;
   color: white;
+  font-weight: 500;
+  border:none;
+  padding: 5px 80px ;
+  width: fit-content;
+  margin: auto !important;
+  display: block;
+  font-size: 0.8rem;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.exportWrapper button:hover {
+  background: black;
 }
