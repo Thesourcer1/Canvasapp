@@ -22,8 +22,6 @@ const CanvasSettings = ({setCanvasSettings }) => {
                 setCanvasSettings({
                     width: window.innerWidth *0.70,
                     height: window.innerHeight -100
-                    // width: window.innerWidth,
-                    // height: window.innerHeight
                 })
                 break; 
            default:

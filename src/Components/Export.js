@@ -5,8 +5,7 @@ const Export = ({canvasObject, setFillStatus}) => {
 
     const download = () => {
         let fileName = document.getElementById("fileName").value;
-        console.log('find value')
-        if (fileName == '' || null) {
+        if (fileName === '' || null) {
             fileName = 'Untitled'
         } 
         let fileExtension;
@@ -19,7 +18,9 @@ const Export = ({canvasObject, setFillStatus}) => {
         if (fileExtension === 'jpg') {
             setFillStatus(true)
         }
-     
+        if (fileExtension !== 'jpg' || 'png'){
+            fileExtension = 'png'
+        }
         setTimeout( () => {
             var canvas = canvasObject;
             var url = canvas.toDataURL(`image/${fileExtension}`);

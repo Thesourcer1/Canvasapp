@@ -18,8 +18,7 @@ function App() {
   const [eraser, setEraserStatus] = useState(false);
 
   const [canvasObject, setCanvasObject] = useState(null);
-  let canvasBox = document.getElementsByClassName("CanvasBox")[0]
-  console.log(canvasBox)
+  
 
   const [clearCanvas, setClearStatus] = useState(false);
 
@@ -96,18 +95,3 @@ function App() {
 }
 
 export default App;
-
-
-
-  // const CanvasContainer = useState(canvasBox);
-
-  // const [scaleCanvas, setScaleCanvas] = useState(0.5);
-  
-  // const openAccordion = (e) => {
-  //   let chevrons = document.getElementsByClassName("bi-chevron-down")
-  //   for (let i = 0; i < chevrons.length; i++) {
-  //     chevrons[i].style.transform = "rotateX(0deg)";
-  //   }
-  //   let deg = 0;
-  //   e.target.childNodes[1].style.transform = `rotateX(${deg + 180}deg)`;
-  // }

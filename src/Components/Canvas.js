@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-
 function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject, clearCanvas ,setClearStatus, fill, setFillStatus}) {
     const canvasRef = useRef(null);
-    const contextRef = useRef(null); //just like svg drawing that jannick made, where the svg coordinate show up
-    const [isDrawing, setIsDrawing] = useState(false); //setISdrawing is a method, isDrawing is the drawing state (boolean), it changes based on the mouse event from false to true. 
+    const contextRef = useRef(null);
+    const [isDrawing, setIsDrawing] = useState(false); //setISdrawing is a method, isDrawing is the drawing state (boolean), it changes based on the mouse event from false to true.
 
 
     useEffect(() => {
@@ -23,7 +22,9 @@ function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject
 
         const canvasid = document.getElementById("canvasid");
         setCanvasObject(canvasid)
-    },[])  //[] = looks in to all the changes added - look in to it :)
+    },[])  
+    
+    //[] = looks in to all the changes added - look in to it
 
     useEffect(() => {
         // Canvas Settings - the first section
@@ -34,7 +35,7 @@ function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject
         canvas.style.width = `${canvasSettings.width}px`;
         canvas.style.height = `${canvasSettings.height}px`;
         context.scale(2,2);
-    }, [canvasSettings])
+    }, [canvasSettings]) // updates
 
     useEffect(() => {
         // colorpicker from other child component
@@ -49,13 +50,13 @@ function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject
         const canvas = canvasRef.current;
         const context = canvas.getContext("2d");
         if (clearCanvas === false) {
-            return                              // returner ud af useEffect
+            return                              // returns out of useEffect
         }
         context.clearRect(0,0, canvasSettings.width, canvasSettings.height)  //CanvasRect.clearRect(x: number, y: number, w: number, h: number)
         setClearStatus(false)
     }, [clearCanvas])
 
-    // white background to jpg file 
+    // white background to jpg file
     useEffect(() => {
         if (fill === false){
             return
@@ -66,37 +67,32 @@ function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject
         context.globalCompositeOperation = "destination-atop"; //blend-mode photoshop - this globalcompositeOperation places itself behind the paths
         context.fillRect(0,0, canvasSettings.width, canvasSettings.height)
         setFillStatus(false) //resets the status
-        context.globalCompositeOperation = "source-over" //this creates a 
+        context.globalCompositeOperation = "source-over" //this creates a
     }, [fill])
 
     const drawingstart = ({nativeEvent}) => { //events from browser, via userinputs
-        console.log("start")
         const {offsetX, offsetY} = nativeEvent; //mousepad coordiations
         contextRef.current.beginPath();
         contextRef.current.moveTo(offsetX,offsetY)
-        setIsDrawing(true) 
+        setIsDrawing(true)
     }
 
     const drawingfinish = () => {
-        console.log("end")
         contextRef.current.closePath()
         setIsDrawing(false)
-       
+
     }
 
     const draw = ({nativeEvent}) => {
         if (!isDrawing) { //! = checks if its false (if ! isn't there it checks if its true)
             return
         }
-        console.log("draw")
         const {offsetX, offsetY} = nativeEvent;
         contextRef.current.lineTo(offsetX, offsetY);
         if (eraser) {
             contextRef.current.clearRect(offsetX, offsetY, brushSize, brushSize)
         }
         else {
-            // contextRef.current.arc(offsetX, offsetY,10, 0, 2 * Math.PI);
-            // contextRef.current.fill();
             const canvas = canvasRef.current;
             const context = canvas.getContext("2d");
             context.lineCap = 'round';
@@ -112,7 +108,7 @@ function Canvas({colorPicker, canvasSettings, brushSize, eraser, setCanvasObject
                 onMouseDown = {drawingstart}
                 onMouseUp = {drawingfinish}
                 onMouseMove = {draw}
-                ref={canvasRef} 
+                ref={canvasRef}
             />
         </div>
     );
